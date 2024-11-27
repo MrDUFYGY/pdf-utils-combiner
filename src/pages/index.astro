@@ -1,0 +1,38 @@
+---
+import Layout from '../layout/layout.astro';
+const title = 'Home';
+---
+<Layout title={title}>
+	<!-- Sección de Subida de Archivos -->
+	<div class="text-center">
+	  <h1 class="text-2xl font-bold">Subir Archivos</h1>
+	  <p class="text-gray-600 mt-4">Selecciona hasta 20 archivos para combinarlos en un solo documento PDF.</p>
+  
+	  <form action="/api/upload" method="POST" enctype="multipart/form-data" class="mt-6">
+		<input 
+		  type="file" 
+		  name="files" 
+		  multiple 
+		  accept=".pdf" 
+		  class="border p-2 rounded w-full"
+		  required 
+		/>
+		<button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+		  Subir y Combinar Archivos
+		</button>
+	  </form>
+	</div>
+  
+	<!-- Sección de Autenticación -->
+	<div class="text-center mt-8">
+	  <h1 class="text-2xl font-bold">Toolbox</h1>
+	  <p class="text-gray-600">Una herramienta para la gestión de documentos</p>
+	  <a
+	  href="https://api-pdf-combiner-production.up.railway.app/auth/google"
+	  class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+	>
+	  Iniciar sesión con Google
+	</a>
+	
+	</div>
+  </Layout>

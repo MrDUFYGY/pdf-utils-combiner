@@ -1,0 +1,13 @@
+---
+import Layout from '../layout/layout.astro';
+
+const user = Astro.cookies.get('user'); // Verifica la sesión
+if (!user) {
+  Astro.redirect('/auth/google');
+}
+---
+<Layout title="Dashboard">
+  <h1>Bienvenido, {user?.value}!</h1>
+  <p>Accede a tus herramientas y funcionalidades.</p>
+  <a href="/logout" class="text-blue-600">Cerrar sesión</a>
+</Layout>

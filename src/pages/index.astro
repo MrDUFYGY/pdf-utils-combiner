@@ -1,38 +1,92 @@
 ---
 import Layout from '../layout/layout.astro';
 const title = 'Home';
+const backendUrl: string = import.meta.env.VITE_BACKEND_URL || '';
 ---
+
 <Layout title={title}>
-	<!-- Sección de Subida de Archivos -->
-	<div class="text-center">
-	  <h1 class="text-2xl font-bold">Subir Archivos</h1>
-	  <p class="text-gray-600 mt-4">Selecciona hasta 20 archivos para combinarlos en un solo documento PDF.</p>
-  
-	  <form action="/api/upload" method="POST" enctype="multipart/form-data" class="mt-6">
-		<input 
-		  type="file" 
-		  name="files" 
-		  multiple 
-		  accept=".pdf" 
-		  class="border p-2 rounded w-full"
-		  required 
-		/>
-		<button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-		  Subir y Combinar Archivos
-		</button>
-	  </form>
-	</div>
-  
-	<!-- Sección de Autenticación -->
-	<div class="text-center mt-8">
-	  <h1 class="text-2xl font-bold">Toolbox</h1>
-	  <p class="text-gray-600">Una herramienta para la gestión de documentos</p>
-	  <a
-	  href="https://api-pdf-combiner-production.up.railway.app/auth/google"
-	  class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-	>
-	  Iniciar sesión con Google
-	</a>
-	
-	</div>
-  </Layout>
+  <!-- Sección de Subida de Archivos -->
+  <div class="text-center">
+    <h1 class="text-2xl font-bold">Subir Archivos</h1>
+    <p class="text-gray-600 mt-4">Selecciona hasta 20 archivos para combinarlos en un solo documento PDF.</p>
+
+    <form id="uploadForm" class="mt-6">
+      <input 
+        id="fileInput"
+        type="file" 
+        name="files" 
+        multiple 
+        accept=".pdf" 
+        class="border p-2 rounded w-full"
+        required 
+      />
+      <button 
+        type="submit" 
+        class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >
+        Subir y Combinar Archivos
+      </button>
+    </form>
+  </div>
+
+  <!-- Sección de Autenticación -->
+  <div class="text-center mt-8">
+    <h1 class="text-2xl font-bold">Toolbox</h1>
+    <p class="text-gray-600">Una herramienta para la gestión de documentos</p>
+    <a
+      href={`${backendUrl}/auth/google`}
+      class="bg-blue-500 text-white px-4 py-2 rounded"
+    >
+      Iniciar sesión con Google
+    </a>
+  </div>
+</Layout>
+
+<script>
+  const backendUrl: string = import.meta.env.VITE_BACKEND_URL || '';
+
+  // Definición de función para subir archivos
+  async function uploadFiles(files: FileList): Promise<void> {
+    const formData = new FormData();
+    for (const file of files) {
+      formData.append('files', file);
+    }
+
+    try {
+      const response = await fetch(`${backendUrl}/api/upload`, {
+        method: 'POST',
+        body: formData,
+        credentials: 'include', // Incluye cookies
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'combined.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      } else {
+        alert('Error al combinar los archivos.');
+      }
+    } catch (error) {
+      console.error('Error al subir los archivos:', error);
+      alert('Error al conectar con el servidor.');
+    }
+  }
+
+  // Manejador de envío del formulario
+  document.getElementById('uploadForm')?.addEventListener('submit', (event: Event) => {
+    event.preventDefault();
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    const files = fileInput?.files;
+
+    if (!files || files.length < 2) {
+      alert('Por favor, selecciona al menos 2 archivos PDF.');
+      return;
+    }
+
+    uploadFiles(files);
+  });
+</script>

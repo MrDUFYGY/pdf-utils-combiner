@@ -2,8 +2,10 @@
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import BGAnimated from '../components/BGAnimated.astro';
+import ToggleTheme from '../components/ToggleTheme.astro';
 
 const { title } = Astro.props;
+
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +20,23 @@ const { title } = Astro.props;
     <Nav />
     <slot />
     <Footer />
+
+    <ToggleTheme />
 </body>
 </html>
 
 
+<script>
+    // Handle theme initialization on the client
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      const root = document.documentElement;
+  
+      // Apply the initial theme
+      if (savedTheme === 'dark') {
+        root.classList.add('dark');
+      } else {
+        root.classList.remove('dark');
+      }
+    });
+  </script>

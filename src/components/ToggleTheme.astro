@@ -1,0 +1,46 @@
+<div
+  id="theme-toggle"
+  class="fixed top-4 right-4 z-50 p-2 bg-gray-200 dark:bg-gray-800 rounded-full shadow-md hover:bg-gray-300 dark:hover:bg-gray-700 cursor-pointer"
+  title="Toggle theme"
+  aria-label="Toggle theme"
+>
+  <span id="theme-icon" class="text-gray-800 dark:text-gray-200">🌞</span>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleButton = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const root = document.documentElement;
+
+    // Validar que los elementos existen antes de usarlos
+    if (!themeToggleButton || !themeIcon) {
+      console.error('Error: No se encontraron los elementos del botón de cambio de tema.');
+      return;
+    }
+
+    // Detectar el tema inicial
+    const savedTheme = localStorage.getItem('theme') || 'light';
+
+    if (savedTheme === 'dark') {
+      root.classList.add('dark');
+      themeIcon.textContent = '🌙';
+    } else {
+      root.classList.remove('dark');
+      themeIcon.textContent = '🌞';
+    }
+
+    // Alternar tema al hacer clic
+    themeToggleButton.addEventListener('click', () => {
+      if (root.classList.contains('dark')) {
+        root.classList.remove('dark');
+        themeIcon.textContent = '🌞';
+        localStorage.setItem('theme', 'light');
+      } else {
+        root.classList.add('dark');
+        themeIcon.textContent = '🌙';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  });
+</script>

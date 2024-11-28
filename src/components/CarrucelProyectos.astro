@@ -1,0 +1,164 @@
+---
+const projects = [
+  {
+    title: "Combina PDFs",
+    description: "Una aplicacion simple que te ayuda a unir los PDFs en un solo archivo, recuerda mantener el orden acendente.",
+    tags: ["Astro", "JS", "API", "PDF", "TailwindCSS"],
+    link: "/projects/pdfCombiner"
+  },
+  {
+    title: "Chat en Tiempo Real",
+    description: "Implementación de un chat en tiempo real utilizando WebSockets.",
+    tags: ["Socket.io", "Express", "Astro"],
+    link: "/projects/chat-en-tiempo-real"
+  },
+  {
+    title: "API de Clima",
+    description: "Integración con API de pronóstico del tiempo para mostrar datos climáticos.",
+    tags: ["API", "JavaScript", "CSS"],
+    link: "/projects/api-de-clima"
+  },
+  {
+    title: "Autenticación OAuth",
+    description: "Sistema de autenticación utilizando OAuth 2.0 con proveedores populares.",
+    tags: ["OAuth", "Node.js", "Astro"],
+    link: "/projects/autenticacion-oauth"
+  },
+  {
+    title: "Dashboard Analytics",
+    description: "Panel de control para visualizar datos analíticos de usuarios y ventas.",
+    tags: ["D3.js", "Astro", "Firebase"],
+    link: "/projects/dashboard-analytics"
+  }
+];
+---
+
+<div class="project-carousel-container relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[52vh]">
+  <div class="project-carousel overflow-hidden">
+    <div class="project-carousel-inner flex gap-4 transition-transform duration-300 ease-in-out">
+      {projects.map((project) => (
+        <div class="project-card flex-none w-full sm:w-1/2 lg:w-[40%] p-4 h-80" >
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg h-full overflow-hidden transition-shadow duration-300 ease-in-out hover:shadow-xl">
+            <div class="p-6">
+              <h3 class="text-lg font-semibold mb-2 text-gray-800 dark:text-white">{project.title}</h3>
+              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
+              <div class="mt-20 flex flex-wrap gap-2 mb-4">
+                {project.tags.map((tag, tagIndex) => (
+                  <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-100">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <a href={project.link} class="w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex items-center justify-center">
+                Ver más
+                <svg class="w-3 h-3 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+  <button class="carousel-control prev absolute top-1/2 left-4 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Anterior proyecto">
+    <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+    </svg>
+  </button>
+  <button class="carousel-control next absolute top-1/2 right-4 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Siguiente proyecto">
+    <svg class="w-6 h-6 text-gray-800 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+  </button>
+</div>
+
+<script lang="ts">
+  document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.querySelector('.project-carousel-inner');
+    const prevButton = document.querySelector('.carousel-control.prev');
+    const nextButton = document.querySelector('.carousel-control.next');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    if (!carousel || !prevButton || !nextButton || projectCards.length === 0) {
+      console.error('Error: No se encontraron elementos necesarios para el carrusel.');
+      return;
+    }
+
+    const totalItems = projectCards.length;
+    let currentIndex = 0;
+
+    // Obtener el ancho dinámico de un ítem basado en estilos
+    const getItemWidth = () => {
+      const firstCard = projectCards[0];
+      const cardWidth = firstCard.offsetWidth;
+      const marginRight = parseInt(getComputedStyle(firstCard).marginRight || '0', 10);
+      return cardWidth + marginRight;
+    };
+
+    // Actualiza la posición del carrusel
+    const updateCarousel = () => {
+      const itemWidth = getItemWidth();
+      carousel.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+    };
+
+    // Eventos de los botones
+    prevButton.addEventListener('click', () => {
+      currentIndex = Math.max(currentIndex - 1, 0);
+      updateCarousel();
+    });
+
+    nextButton.addEventListener('click', () => {
+      currentIndex = Math.min(currentIndex + 1, totalItems - 1);
+      updateCarousel();
+    });
+
+    // Asegurar que el carrusel responda a cambios de tamaño
+    window.addEventListener('resize', updateCarousel);
+
+    // Inicializar el carrusel
+    updateCarousel();
+  });
+</script>
+
+<style>
+  .project-carousel {
+    overflow: hidden;
+  }
+
+  .project-carousel-inner {
+    display: flex;
+    gap: 1rem; /* Añade espacio entre las tarjetas */
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .project-card {
+    flex: 0 0 auto;
+  }
+
+  @media (max-width: 640px) {
+    .project-card {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 1024px) {
+    .project-card {
+      width: 50%;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .project-card {
+      width: 40%;
+    }
+  }
+
+  .carousel-control {
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .carousel-control:hover {
+    opacity: 0.8;
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+
+---
+  
+  <!-- container -->
+  <div class=" flex justify-center items-center w-screen p-5">
+    <!-- card -->
+    <div class="border shadow-teal-300 shadow-md max-w-2xl p-6 rounded-lg dark:bg-gray-700 dark:text-gray-300">
+     <div class="w-full max-w-screen-xl px-10 mx-auto">
+              <ul class="flex-col md:flex-row flex md:space-x-8 mt-4 md:mt-0 md:text-sm md:font-medium ">
+  
+                  <li>
+                    <div class="relative">
+                        <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class=" text-gray-700 hover:bg-gray-50 border-b border-gray-100 hover:bg-transparent md:border-0 pl-3 pr-4 py-2 md:hover:text-blue-200 md:p-0 font-medium flex items-center justify-between w-full md:w-auto dark:text-white">
+                          Proyectos
+                          <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                          </svg>
+                        </button>
+                        <div id="dropdownNavbar" class="hidden absolute top-full left-0 bg-gray-800 hover: text-base z-50 list-none divide-y divide-gray-100 rounded shadow my-2 w-44 dark:text-white">
+                          <ul class="py-1 dark:text-white" aria-labelledby="dropdownLargeButton">
+                            <li>
+                              <a href="/" class="text-sm hover:bg-gray-700 text-gray-700 block px-4 py-2 dark:text-white">Otras</a>
+                            </li>
+                            <li>
+                              <a href="#" class="text-sm hover:bg-gray-700 text-gray-700 block px-4 py-2 dark:text-white">Conocer</a>
+                            </li>
+                            <li>
+                              <a href="#" class="text-sm hover:bg-gray-700 text-gray-700 block px-4 py-2 dark:text-white">Contacto</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      
+                  </li>
+                  <li>
+                      <a href="/" class="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-blue-200 md:p-0 dark:text-white dark:hover:text-gray-200 dark:md:hover:text-blue-200">
+                          Inicio
+                      </a>
+                  </li>
+                  <li>
+                      <a href="/contact" class="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-blue-200 md:p-0 dark:text-white dark:hover:text-gray-200 dark:md:hover:text-blue-200">
+                          Conocer
+                      </a>
+                  </li>
+                  <li>
+                      <a href="/otros" class="text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-blue-200 md:p-0 dark:text-white dark:hover:text-gray-200 dark:md:hover:text-blue-200">
+                          Otros
+                      </a>
+                  </li>
+              </ul>
+          </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+    const dropdownToggle = document.getElementById('dropdownNavbarLink');
+    const dropdownMenu = document.getElementById('dropdownNavbar');
+  
+    dropdownToggle.addEventListener('click', () => {
+      // Toggle visibility
+      dropdownMenu.classList.toggle('hidden');
+    });
+  
+    document.addEventListener('click', (e) => {
+      // Close the dropdown if clicking outside
+      if (!dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdownMenu.classList.add('hidden');
+      }
+    });
+  });
+  </script>

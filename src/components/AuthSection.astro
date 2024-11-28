@@ -1,0 +1,16 @@
+---
+const backendUrl: string = import.meta.env.VITE_BACKEND_URL || '';
+---
+
+
+  <!-- Sección de Autenticación -->
+  <div class="text-center mt-8">
+    <h1 class="text-2xl font-bold">Toolbox</h1>
+    <p class="text-gray-600 mb-10">Una herramienta para la gestión de documentos</p>
+    <a
+      href={`${backendUrl}/auth/google`}
+      class="bg-blue-500  text-white px-4 py-2 rounded"
+    >
+      Iniciar sesión con Google
+    </a>
+  </div>

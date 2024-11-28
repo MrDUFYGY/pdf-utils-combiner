@@ -1,0 +1,80 @@
+---
+import Layout from '../../layout/layout.astro';
+
+const title = 'Subir Archivos';
+---
+<Layout title={title}>
+    <!-- Sección de Subida de Archivos -->
+    <div class="text-center mx-auto p-20 max-w-2xl ">
+    <h1 class="text-2xl font-bold">Subir Archivos</h1>
+    <p class="text-gray-600 mt-4">Selecciona hasta 50 archivos para combinarlos en un solo documento PDF.</p>
+
+    <form id="uploadForm" class="mt-6">
+        <input 
+        id="fileInput"
+        type="file" 
+        name="files" 
+        multiple 
+        accept=".pdf" 
+        class="border p-2 rounded w-full"
+        required 
+        />
+        <button 
+        type="submit" 
+        class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+        Subir y Combinar Archivos
+        </button>
+    </form>
+    </div>
+    
+</Layout>
+
+
+  <script>
+  
+    // Definición de función para subir archivos
+    async function uploadFiles(files: FileList): Promise<void> {
+      const formData = new FormData();
+      for (const file of files) {
+        formData.append('files', file);
+      }
+  
+      try {
+        const response = await fetch(`https://api-pdf-combiner-production.up.railway.app/api/upload`, {
+          method: 'POST',
+          body: formData,
+          credentials: 'include', // Incluye cookies
+        });
+  
+        if (response.ok) {
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'combined.pdf';
+          a.click();
+          window.URL.revokeObjectURL(url);
+        } else {
+          alert('Error al combinar los archivos.');
+        }
+      } catch (error) {
+        console.error('Error al subir los archivos:', error);
+        alert('Error al conectar con el servidor.');
+      }
+    }
+  
+    // Manejador de envío del formulario
+    document.getElementById('uploadForm')?.addEventListener('submit', (event: Event) => {
+      event.preventDefault();
+      const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+      const files = fileInput?.files;
+  
+      if (!files || files.length < 2) {
+        alert('Por favor, selecciona al menos 2 archivos PDF.');
+        return;
+      }
+  
+      uploadFiles(files);
+    });
+  </script>

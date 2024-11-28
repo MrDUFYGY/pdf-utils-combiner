@@ -1,6 +1,7 @@
 ---
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import BGAnimated from '../components/BGAnimated.astro';
 
 const { title } = Astro.props;
 ---
@@ -12,7 +13,8 @@ const { title } = Astro.props;
     <title> Toolbox - {title || 'undefined'}</title>
 
 </head>
-<body class="bg-gray-900 text-zinc-100">
+<body class=" text-zinc-100">
+	<BGAnimated />
     <Nav />
     <slot />
     <Footer />

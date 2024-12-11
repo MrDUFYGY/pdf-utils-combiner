@@ -1,0 +1,70 @@
+﻿/* Contenedor externo */
+.contenedor-externo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; /* Ajusta la altura de la pantalla */
+}
+h1 {
+    color: #0E371F
+}
+h2 {
+    color: #116D37
+}
+/* Card centrada */
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 22rem;
+    background-color: #18AC54;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+    /* Elementos internos centrados */
+    .card .contenedor {
+        background-color: #18AC54;
+        text-align: center;
+
+        width: 100%;
+    }
+
+/* Botón principal */
+.btn {
+    display: inline-block;
+    width: 80%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+/* Ocultar el div inicialmente */
+.oculto {
+    display: none;
+}
+
+/* Media queries para pantallas pequeñas */
+@media (max-width: 768px) {
+    .contenedor {
+        width: 90%;
+        padding: 15px;
+    }
+
+    select, .btn {
+        font-size: 14px;
+    }
+}

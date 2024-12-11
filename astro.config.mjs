@@ -3,12 +3,23 @@ import { defineConfig } from 'astro/config';
 
 import tailwind from '@astrojs/tailwind';
 
+import react from '@astrojs/react';
+
+import svelte from '@astrojs/svelte';
+
 // https://astro.build/config
 export default defineConfig({
   server: {
     port: 4321, // Puerto de Astro
   },
   vite: {
+    resolve: {
+      alias: {
+        '@components': '/src/components',
+        '@utils': '/src/utils',
+
+      },
+    },
     server: {
       proxy: {
         '/auth': {
@@ -22,5 +33,5 @@ export default defineConfig({
       },
     },
   },
-  integrations: [tailwind()],
+  integrations: [tailwind(), react(), svelte()],
 });

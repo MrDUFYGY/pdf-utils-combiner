@@ -1,0 +1,744 @@
+﻿body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    position: relative;
+    z-index: 1;
+    background-color: #2d2d2d;
+    -webkit-user-select: none; /* Chrome, Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    user-select: none;
+}
+
+.membretes {
+    position: fixed; /* Para que el elemento esté siempre visible */
+    top: 0; /* Posicionarlo en la parte superior */
+    right: 0; /* Alinearlo a la derecha */
+    width: 820px; /* Ancho fijo del SVG */
+    height: 366px; /* Alto fijo del SVG */
+    z-index: -1; /* Asegurarse de que esté detrás del contenido */
+    opacity: 0.8; /* Si quieres darle un efecto de transparencia */
+}
+
+.page-container {
+    width: 93%;
+    max-width: 1300px;
+    margin: 5vh auto;
+    padding: 0;
+    max-height: 2000px; /* Controla el tamaño del contenedor para habilitar el scroll */
+    overflow-y: auto; /* Permite el desplazamiento vertical */
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.manual-container {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: #008751;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+    .logo img {
+        max-width: 100px;
+        max-height: 100px;
+        margin-right: 15px;
+    }
+
+.logo-text {
+    color: white;
+}
+
+    .logo-text h1 {
+        margin: 0;
+        font-size: 30px;
+    }
+
+    .logo-text p {
+        margin: 0;
+        color: #a3f5c8;
+        font-size: 22px;
+    }
+
+.title {
+    
+    text-align: right;
+    color: white;
+}
+
+    .title h2 {
+        margin: 0;
+        font-size: 25px;
+    }
+
+    .title p {
+        font-size: 20px;
+        margin: 5px 0 0;
+        color: #ffd700;
+    }
+
+.toolbar {
+    background-color: #006f42;
+    padding: 10px;
+    display: flex; /* Flexbox para alinear los elementos en una línea */
+    justify-content: space-between; /* Distribuir espacio entre los elementos */
+    align-items: center; /* Centrar verticalmente */
+    position: sticky; /* Mantener la barra visible en el desplazamiento */
+    top: 0;
+}
+
+    .toolbar button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+.content {
+    background-color: #e0e0e0;
+    padding: 20px;
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+#pdf-viewer {
+    overflow: auto;
+    padding-bottom: 50px;
+    padding-top: 10px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .title {
+        text-align: left;
+        margin-top: 10px;
+    }
+}
+
+/* Botones de navegación flotantes a cada lado del contenido */
+#go_previous, #go_next {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(208, 216, 58, 0.85);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 10;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Transiciones */
+}
+
+#go_previous {
+    left: 3.5vw;
+    border-top-right-radius: 15px; /* Borde redondeado arriba a la derecha */
+    border-bottom-right-radius: 15px; /* Borde redondeado abajo a la derecha */
+}
+
+#go_next {
+    right: 3.5vw;
+    border-top-left-radius: 15px; /* Borde redondeado arriba a la izquierda */
+    border-bottom-left-radius: 15px; /* Borde redondeado abajo a la izquierda */
+}
+
+    /* Efecto hover */
+    #go_previous:hover, #go_next:hover {
+        background-color: rgba(255, 229, 100, 0.85); /* Cambiar color de fondo al hacer hover */
+        transform: translateY(-50%) scale(1.1); /* Escalar un poco al hacer hover */
+    }
+
+#navigation_controls {
+    display: flex;
+    align-items: center; /* Centrar verticalmente los elementos del control de navegación */
+    gap: 10px; /* Espaciado entre los botones */
+    align-items: center;
+}
+
+#zoom_controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Alinea los elementos al centro */
+}
+
+    #zoom_controls h4 {
+        text-align: center; /* Centramos el texto "Zoom" */
+        margin-bottom: 1px; /* Separación entre el título y los botones */
+        margin-top: 1px; /* Separación entre el título y los botones */
+        color: white;
+    }
+
+    #zoom_controls div {
+        display: flex;
+        justify-content: center; /* Centra los botones horizontalmente */
+    }
+
+    #zoom_controls button {
+        color: black;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.35));
+        transition: background-color 0.3s ease, transform 0.3s ease; /* Transición suave */
+    }
+
+        #zoom_controls button:hover {
+            background-color: rgba(208, 216, 58, 0.85); /* Cambia el color de fondo al hacer hover */
+            transform: scale(1.1); /* Escala un poco el botón al hacer hover */
+            box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.4); /* Añade una sombra más intensa en hover */
+        }
+
+.InputContainer {
+    /* Puedes añadir estilos generales para el contenedor si es necesario */
+}
+
+    .InputContainer div {
+        display: flex;
+        flex-direction: column; /* Coloca el texto y el input en formato vertical */
+        align-items: center; /* Centra los elementos horizontalmente */
+        gap: 5px; /* Espaciado entre el texto y el input */
+    }
+
+    .InputContainer h4 {
+        text-align: center; /* Centrar el texto "Pag." */
+        margin-bottom: 1px; /* Separación entre el título y el input */
+        margin-top: 1px; /* Separación superior si lo necesitas */
+        color: white;
+    }
+
+#current_page {
+    width: 50px; /* Ajusta el tamaño del input */
+    padding: 5px;
+    text-align: center; /* Centrar el número dentro del input */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.toolbar button {
+    background-color: #F6E737;
+    border-radius: 50px;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 70px;
+    max-height: 70px;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+.download-print-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .download-print-controls h4 {
+        text-align: center; /* Centramos el texto "Zoom" */
+        margin-bottom: 1px; /* Separación entre el título y los botones */
+        margin-top: 1px; /* Separación entre el título y los botones */
+        color: white;
+    }
+
+    .download-print-controls div {
+        display: flex;
+        justify-content: center;
+    }
+
+    .download-print-controls button {
+        font-size: 18px;
+    }
+
+/* Estilos para la isla flotante */
+
+/* Estilos para el menú flotante */
+.floating-controls {
+    position: fixed; /* Fijo en la pantalla */
+    bottom: 20px; /* Separación desde el fondo */
+    left: 50%; /* Centrar horizontalmente */
+    transform: translateX(-50%); /* Asegura que esté completamente centrado */
+    display: flex; /* Flexbox para alinear los elementos */
+    gap: 15px; /* Espaciado entre los botones */
+    background-color: rgba(4, 85, 37, 0.8); /* Fondo semi-transparente */
+    padding: 15px 20px; /* Espacio interno (padding) */
+    border-radius: 20px; /* Bordes redondeados */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Sombra para darle efecto flotante */
+    z-index: 70; /* Asegura que esté por encima del contenido, pero por debajo del modal */
+    align-items: center; /* Alinear los elementos verticalmente */
+    opacity: 0; /* Empieza invisible */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Transiciones de opacidad y posición */
+}
+
+.floating-controls.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0); /* Totalmente visible y centrada */
+}
+
+.floating-controls.hide {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px); /* Desplazada hacia abajo y oculta */
+}
+
+/* Estilos para los botones dentro de la isla flotante */
+.floating-controls button {
+    background: none; /* Sin fondo (puedes personalizarlo si quieres) */
+    border: groove; /* Sin borde */
+    color: white; /* Color de texto blanco */
+    font-size: 18px; /* Tamaño de fuente */
+    cursor: pointer; /* Mostrar el cursor de pointer (mano) al pasar */
+    padding: 10px; /* Espacio alrededor del texto */
+}
+
+.floating-controls input {
+    background-color: white; /* Fondo blanco para el input */
+    color: black; /* Texto negro */
+    padding: 5px; /* Espacio interno */
+    border-radius: 5px; /* Bordes redondeados */
+    border: none; /* Sin borde */
+    text-align: center; /* Centrar el número */
+    width: 50px; /* Tamaño fijo del input */
+}
+.pdf-gallery-container {
+    width: 98%;
+    max-height: 200px;
+    overflow-x: auto;
+    display: flex;
+    gap: 10px;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    align-items: center;
+}
+
+#pdf-gallery {
+    display: flex;
+    gap: 10px;
+}
+
+.pdf-thumbnail {
+    width: 100px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border 0.3s;
+}
+
+    .pdf-thumbnail:hover {
+        border-color: #008751;
+    }
+
+.zoom-button-group {
+    display: inline-flex;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #ccc; /* Borde que envuelve ambos botones */
+}
+
+    .zoom-button-group button {
+        background-color: #D0D83A;
+        color: black;
+        padding: 10px 15px;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        display: inline-block;
+        min-width: 50px;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.35));
+    }
+
+        .zoom-button-group button:first-child {
+            border-right: 1px solid #ccc; /* Línea divisoria entre los botones */
+        }
+
+        .zoom-button-group button:hover {
+            background-color: #ddd; /* Color de fondo al pasar el mouse */
+        }
+
+        .zoom-button-group button:active {
+            background-color: #bbb; /* Color de fondo al hacer clic */
+        }
+
+button[aria-label="Descargar manual"] {
+    background-color: #D0D83A; /* Fondo transparente inicialmente */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Mostrar el cursor como puntero */
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.35));
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Transición suave */
+}
+
+    button[aria-label="Descargar manual"]:hover {
+        background-color: #18AC54; /* Fondo con un color suave en hover */
+        transform: scale(1.1); /* Escala el botón ligeramente en hover */
+    }
+
+    button[aria-label="Descargar manual"] svg {
+        transition: fill 0.3s ease; /* Transición suave para el color del SVG */
+    }
+
+    button[aria-label="Descargar manual"]:hover svg {
+        fill: #ddd; /* Cambia el color del icono a verde en hover */
+    }
+
+
+
+
+
+
+
+
+
+/* Contenedor del icono de ayuda */
+.help-circle {
+    position: fixed;
+    bottom: 3.8vw;
+    left: 4.8vw;
+    width: 50px;
+    height: 50px;
+    background-color: #018E2E;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 1000;
+}
+
+    /* Círculo exterior para el efecto de respiración */
+    .help-circle::before {
+        content: "";
+        position: absolute;
+        width: 80px; /* Tamaño inicial del círculo exterior */
+        height: 80px;
+        border-radius: 50%;
+        background-color: rgba(69, 163, 43, 0.5); /* Color del círculo con opacidad */
+        animation: breathing 2.4s infinite; /* Animación de respiración */
+        z-index: -1; /* Coloca el círculo detrás del círculo principal */
+    }
+
+/* Animación de respiración */
+@keyframes breathing {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(1.2); /* Expande el círculo */
+        opacity: 0.3; /* Reduce la opacidad */
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+}
+
+/* Tooltip con instrucciones */
+.tooltip-box {
+    position: fixed;
+    bottom: 8.2vw;
+    left: 20px;
+    background-color: rgba(250, 235, 48, 0.9);
+    color: black;
+    padding: 15px;
+    border-radius: 6px;
+    display: none; /* Oculto por defecto */
+    z-index: 100;
+    font-size: 14px;
+    width: 300px;
+}
+
+/* Mostrar el tooltip cuando se pasa el ratón sobre el círculo */
+.help-circle:hover + .tooltip-box {
+    display: block;
+}
+
+/* Flecha del tooltip */
+.tooltip-box::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* Flecha apuntando hacia el círculo */
+    left: 50%;
+    margin-left: -100px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(250, 235, 48, 0.9) transparent transparent transparent;
+}
+
+
+
+/* Estilos para ambos modales */
+dialog {
+    width: 95%;
+    max-width: 98%;
+    height: 95%; /* Hacemos que el modal ocupe el 95% de la pantalla */
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    padding: 0;
+    overflow: hidden; /* Oculta el desbordamiento del modal */
+}
+
+.modal-content {
+    height: calc(95% - 50px); /* Ajusta el tamaño para no cubrir el header del modal */
+    overflow-y: auto; /* Activa el scroll vertical solo dentro del contenido */
+    padding: 10px;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1vw;
+    align-items: center;
+    background-color: #f1f1f1;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding-right: 15px;
+    position: relative; /* Necesario para que position: absolute funcione dentro de este contenedor */
+}
+    .modal-header h2 {
+        position: absolute;
+        left: 50%; /* Posiciona el h2 en el centro horizontal del contenedor */
+        transform: translateX(-50%); /* Ajusta para que quede perfectamente centrado */
+        margin: 0; /* Elimina cualquier margen predeterminado */
+        font-size: 1.5rem;
+        text-align: center; /* Centra el texto dentro del h2 */
+    }
+    /* Botones en la cabecera */
+    .modal-header button {
+        max-width: 50px;
+        max-height: 50px;
+        right: 0;
+        height: 50px;
+        width: 50px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #333;
+        transition: color 0.3s ease;
+    }
+
+        .modal-header button:hover {
+            color: #ff0000; /* Cambiar el color de la X al hacer hover */
+        }
+
+
+
+
+/* Estilos del grupo de botones de navegación */
+.nav-buttons {
+    position: absolute;
+    display: flex;
+    gap: 20px; /* Separación entre los botones */
+    justify-content: start; /* Ajusta la alineación del grupo de botones */
+    align-items: center;
+
+
+    left: 20px; /* Alineamos a la izquierda */
+}
+
+    /* Estilos para los botones de navegación (Atrás y Adelante) */
+    .nav-buttons .back-btn, .nav-buttons .forward-btn {
+        background-color: #f0f0f0;
+        color: #333;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .nav-buttons .back-btn:hover {
+            background-color: #e74c3c; /* Color de fondo rojo en hover */
+            color: #fff; /* Color del texto blanco en hover */
+            border-color: #e74c3c;
+        }
+
+        .nav-buttons .forward-btn:hover {
+            background-color: #2ecc71; /* Color de fondo verde en hover */
+            color: #fff; /* Color del texto blanco en hover */
+            border-color: #2ecc71;
+        }
+
+    /* Ajustes adicionales para los botones de navegación */
+    .nav-buttons .back-btn, .nav-buttons .forward-btn {
+        min-width: 95px;
+        text-align: center;
+    }
+
+/* Estilos para el menú flotante */
+#floating-menu {
+    position: fixed;
+    bottom: 20px;
+    right: 120px;
+    width: 200px;
+    background-color: rgba(0, 0, 0, 0.8);
+    max-height: 85%;
+    overflow-y: auto;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    display: block; /* Escondido por defecto */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+}
+
+    #floating-menu button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        background-color: #D0D83A;
+        border: none;
+        color: black;
+        font-size: 12px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+        #floating-menu button:hover {
+            background-color: #18AC54;
+        }
+/* Botón flotante para cerrar o mostrar el menú */
+/* Estilo del botón "X" para cerrar el menú flotante */
+#close-menu-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    border: none;
+    max-height:30px;
+    max-width: 30px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    #close-menu-btn:hover {
+        color: yellow;
+    }
+
+/* Desactivar el scroll del body cuando el modal esté abierto */
+body.modal-open {
+    overflow: hidden;
+}
+
+
+/* Estilos específicos para la tarjeta de contacto */
+#contactCardDialog {
+    max-width: 500px; /* Ancho específico para la tarjeta */
+    height: 35%; /* Altura automática para ajustar el contenido */
+    border-radius: 12px; /* Bordes más redondeados */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+    padding: 0;
+    overflow: hidden;
+    background-color: #ffffff; /* Fondo blanco */
+}
+
+    #contactCardDialog .modal-header {
+        background-color: #4CAF50; /* Color de fondo verde */
+        color: white; /* Color de texto blanco */
+        padding: 15px; /* Más padding para el encabezado */
+    }
+
+    #contactCardDialog .modal-content {
+        padding: 20px; /* Más padding para el contenido */
+        display: flex;
+        flex-direction: column;
+        gap: 10px; /* Espacio entre los elementos */
+    }
+
+        #contactCardDialog .modal-content p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        #contactCardDialog .modal-content span {
+            font-weight: bold;
+            color: #333;
+        }
+
+            #contactCardDialog .modal-content span#ext {
+                font-weight: normal;
+                color: #666;
+            }
+
+    /* Asegurarse de que los botones de cierre y refresco estén bien posicionados */
+    #contactCardDialog .close-btn {
+        background-color: yellowgreen;
+        border-radius: 15px;
+        right: 2vw; /* Ajustar posición si es necesario */
+    }
+
+    /*#contactCardDialog .refresh {
+        right: 4vw;*/ /* Ajustar posición si es necesario */
+    /*}*/
+
+
+
+
+
+
+/* Para navegadores basados en Webkit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+    width: 12px; /* Ancho de la barra de desplazamiento */
+}
+
+::-webkit-scrollbar-track {
+    background: #018E2E; /* Fondo verde oscuro */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #AFC73D; /* Color lima verdeamarillo */
+    border-radius: 10px; /* Bordes redondeados */
+    border: 2px solid #AFC73D; /* Bordes para mejor contraste */
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #AFC73D; /* Color más claro al pasar el ratón por encima */
+    }
+
+/* Para Firefox */
+* {
+    scrollbar-width: thin; /* Ancho de la barra: thin, auto o none */
+    scrollbar-color: #AFC73D #013220; /* Color del pulgar y el fondo */
+}
+
+

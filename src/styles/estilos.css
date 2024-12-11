@@ -1,0 +1,87 @@
+﻿/* Contenedor principal */
+.contenedor {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos de títulos */
+h1 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Estilo del select */
+select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    margin-bottom: 20px;
+    transition: border 0.3s ease;
+}
+
+    select:focus {
+        border: 1px solid #007bff;
+    }
+
+/* Botón principal */
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+/* Ocultar el div inicialmente */
+.oculto {
+    display: none;
+}
+
+/* Estilos para el mensaje */
+#miDiv {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#mensajeTexto {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+/* Media queries para pantallas pequeñas */
+@media (max-width: 768px) {
+    .contenedor {
+        width: 100%;
+        padding: 15px;
+    }
+
+    select, .btn {
+        font-size: 14px;
+    }
+}

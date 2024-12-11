@@ -1,0 +1,282 @@
+---
+import Layout from '../../layout/layout.astro';
+
+const title = 'Editor de PDF';
+---
+<Layout title={title}>
+    <link rel="stylesheet" href="../../../src/styles/estilosPDF.css">
+
+
+    <script src="../../../src/utils/pdfFunctions.js"></script>
+    <script src="../../../src/utils/pdfLogic.js"></script>
+    <script src="../../../src/utils/pdfFormat.js"></script>
+
+
+    <div id="pdf-viewer"></div>
+
+
+    <!-- Menú flotante -->
+    <div class="floating-menu" id="floating-menu">
+        <h4>Menú de opciones</h4>
+
+
+        <button onclick="cierreMenuFlotante()" id="close-menu-btn">X</button>
+
+        <button onclick="window.location.href='/home'">Ir al Menú Principal</button>
+        <!-- <button onclick="openPDFModal()">Imprimir</button> -->
+        <!-- Botón que muestra la tarjeta de contacto -->
+        <button id="openContactCardBtn">Mostrar Contacto</button>
+
+        <button id="openErrorDialogBtn">Reportar Error</button>
+
+        <!-- <button id="openErrorLogBtn" onclick="cargarErrores()">Ver Registro de Errores</button>*@ -->
+
+        <button onclick="window.history.back();">Atras</button>
+        <!-- @*<button onclick="alert('Otra opción 3')">Opción 3</button>*@ -->
+
+        <!-- Dialog para mostrar los registros de errores -->
+        <dialog id="errorLogDialog">
+            <div class="modal-header">
+                <h2>Registro de Errores</h2>
+                <button class="close-btn" id="closeErrorLogBtn">&times;</button>
+            </div>
+            <div class="modal-content">
+                <!-- Tabla de errores -->
+                <table id="tablaErrores">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ruta</th>
+                            <th>Descripción</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Aquí se cargarán los errores dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </dialog>
+        <!-- Dialog para reportar un error -->
+        <dialog id="errorDialog">
+            <div class="modal-header">
+                <h2>Reportar un Error o Sugerencia</h2>
+                <button class="close-btn" id="closeErrorDialogBtn">&times;</button>
+            </div>
+            <div class="modal-content">
+                <!-- Nombre del PDF afectado -->
+                <p><strong>Nombre del PDF afectado:</strong> <span id="pdfName"></span></p>
+
+                <!-- Input para la descripción del error o sugerencia -->
+                <div class="input-group">
+                    <label for="errorDescription">Descripción del error o sugerencia:</label>
+                    <textarea id="errorDescription" placeholder="Describe el error o sugerencia aquí..." rows="4" style="width:100%;"></textarea>
+                </div>
+
+                <!-- Botón para enviar el reporte -->
+                <button onclick="guardarError()" id="saveErrorBtn">Guardar Reporte</button>
+            </div>
+        </dialog>
+
+    </div>
+
+
+    <div class="membretes">
+        <svg width="820" height="366" viewBox="0 0 820 366" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M820 280L141 0H820V280Z" fill="#18AC54" />
+            <path d="M820 222L0 0H235.5L820 163.034V222Z" fill="#D0D83A" />
+            <path d="M820 222L534 144.5L820 366V222Z" fill="#116D37" />
+        </svg>
+    </div>
+
+    <!-- Aquí se renderiza el contenido de cada vista -->
+    <div class="page-container">
+        <div class="manual-container">
+
+
+            <div class="header">
+                <div class="logo">
+                    <!-- <img src="~/Content/img/LogoHidrosina.png" alt="Hidrosina logo" /> -->
+                    <div class="logo-text">
+                        <h1>Hidrosina</h1>
+                        <p>Grupo Gasolinero</p>
+                    </div>
+                </div>
+                <div class="title">
+                    <h2>Manual</h2>
+                    <p>Configuracion</p>
+                </div>
+            </div>
+
+
+            <!-- Controles de navegación -->
+            <div id="navigation_controls">
+                <button id="go_previous">
+                    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 25.0383L50 0L26.2338 25.0383L50 50L0 25.0383Z" fill="#8FB028" />
+                    </svg>
+
+                </button>
+                <button id="go_next">
+                    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 25.0383L0 0L23.7662 25.0383L0 50L50 25.0383Z" fill="#8FB028" />
+                    </svg>
+
+                </button>
+            </div>
+
+            <!-- Herramientas de zoom y descarga -->
+            <div class="toolbar">
+
+                <div class="InputContainer">
+                    <div style=" gap: 5px;">
+                        <h4>Pag.</h4>
+                        <div>
+                            <input id="current_page" class="current_page" value="1" type="number" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="zoom_controls">
+                    <h4>Zoom</h4>
+                    <div style="display: flex; justify-content: center; gap: 10px;">
+                        <button id="zoom_out" class="zoom_out">
+                            <svg width="20" height="30" viewBox="0 0 50 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M46.4286 4.99805H3.57143C2.62423 4.99805 1.71582 4.73465 1.04605 4.26581C0.376275 3.79697 0 3.16109 0 2.49805C0 1.83501 0.376275 1.19912 1.04605 0.73028C1.71582 0.261439 2.62423 -0.00195312 3.57143 -0.00195312H46.4286C47.3758 -0.00195312 48.2842 0.261439 48.954 0.73028C49.6237 1.19912 50 1.83501 50 2.49805C50 3.16109 49.6237 3.79697 48.954 4.26581C48.2842 4.73465 47.3758 4.99805 46.4286 4.99805Z" fill="black" />
+                            </svg>
+
+                        </button>
+                        <button id="zoom_in" class="zoom_in">
+                            <svg width="20" height="20" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M46.4286 28.5714H28.5714V46.4286C28.5714 47.3758 28.1952 48.2842 27.5254 48.954C26.8556 49.6237 25.9472 50 25 50C24.0528 50 23.1444 49.6237 22.4746 48.954C21.8048 48.2842 21.4286 47.3758 21.4286 46.4286V28.5714H3.57143C2.62423 28.5714 1.71582 28.1952 1.04605 27.5254C0.376275 26.8556 0 25.9472 0 25C0 24.0528 0.376275 23.1444 1.04605 22.4746C1.71582 21.8048 2.62423 21.4286 3.57143 21.4286H21.4286V3.57143C21.4286 2.62423 21.8048 1.71582 22.4746 1.04605C23.1444 0.376273 24.0528 0 25 0C25.9472 0 26.8556 0.376273 27.5254 1.04605C28.1952 1.71582 28.5714 2.62423 28.5714 3.57143V21.4286H46.4286C47.3758 21.4286 48.2842 21.8048 48.954 22.4746C49.6237 23.1444 50 24.0528 50 25C50 25.9472 49.6237 26.8556 48.954 27.5254C48.2842 28.1952 47.3758 28.5714 46.4286 28.5714Z" fill="black" />
+                            </svg>
+
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="download-print-controls">
+                    <h4>Descarga</h4>
+                    <div style="display: flex; justify-content: center; gap: 10px;">
+                        <button aria-label="Descargar manual" onclick="comprobadorDescarga()">
+                            <svg width="22" height="27" viewBox="0 0 22 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18.2129 9.52941H15.7143V1.58824C15.7143 0.714706 15.0071 0 14.1429 0H7.85714C6.99286 0 6.28571 0.714706 6.28571 1.58824V9.52941H3.78714C2.38857 9.52941 1.68143 11.2447 2.67143 12.2453L9.88429 19.5353C10.4971 20.1547 11.4871 20.1547 12.1 19.5353L19.3129 12.2453C20.3029 11.2447 19.6114 9.52941 18.2129 9.52941ZM0 25.4118C0 26.2853 0.707143 27 1.57143 27H20.4286C21.2929 27 22 26.2853 22 25.4118C22 24.5382 21.2929 23.8235 20.4286 23.8235H1.57143C0.707143 23.8235 0 24.5382 0 25.4118Z" fill="black" />
+                            </svg>
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenedor del visor de PDF -->
+            <div class="content">
+                <div class="pdf-gallery-container">
+                    <div id="pdf-gallery"></div>
+                </div>
+                <div id="pdf-viewer"></div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- Modal de impresión -->
+    <dialog id="pdf-print-modal" style="width: 80%; height: 90%;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+            <h2>Manual de Configuración</h2>
+            <button onclick="closePDFModal()">❌</button>
+        </div>
+        <iframe id="pdf-iframe" src="" style="width: 100%; height: 85%; border: none;"></iframe>
+        <div style="text-align: center; padding: 10px;">
+            <button onclick="printPDF()">🖨️ Imprimir</button>
+        </div>
+    </dialog>
+
+
+
+
+
+    <div class="floating-controls">
+        <div class="InputContainer">
+            <h4>Pag.</h4>
+            <div>
+                <input id="current_page_floating" class="current_page" value="1" type="number" />
+
+            </div>
+        </div>
+        <div id="zoom_controls">
+            <h4>Zoom</h4>
+            <div class="zoom-button-group">
+                <button id="zoom_out_floating" class="zoom_out">-</button>
+                <button id="zoom_in_floating" class="zoom_in">+</button>
+            </div>
+        </div>
+        <div class="download-print-controls">
+            <h4>Descarga</h4>
+            <button aria-label="Descargar manual" onclick="comprobadorDescarga()" style="background-color: #D0D83A; border-radius: 50px; min-width: 45px; min-height: 20px;">
+                <svg width="15" height="18" viewBox="0 0 15 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.4179 6.35294H10.7143V1.05882C10.7143 0.476471 10.2321 0 9.64286 0H5.35714C4.76786 0 4.28571 0.476471 4.28571 1.05882V6.35294H2.58214C1.62857 6.35294 1.14643 7.49647 1.82143 8.16353L6.73929 13.0235C7.15714 13.4365 7.83214 13.4365 8.25 13.0235L13.1679 8.16353C13.8429 7.49647 13.3714 6.35294 12.4179 6.35294ZM0 16.9412C0 17.5235 0.482143 18 1.07143 18H13.9286C14.5179 18 15 17.5235 15 16.9412C15 16.3588 14.5179 15.8824 13.9286 15.8824H1.07143C0.482143 15.8824 0 16.3588 0 16.9412Z" fill="black" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+
+
+    <!-- Dialog para la tarjeta de contacto -->
+    <dialog id="contactCardDialog">
+        <div class="modal-header">
+            <h2>Datos de Contacto</h2>
+            <button class="close-btn" id="closeContactCardBtn">&times;</button>
+
+        </div>
+        <div class="modal-content">
+            <p><strong>Correo:</strong> <span id="contactEmail"></span></p>
+            <p><strong>Número de Teléfono:</strong> <span id="contactPhone"></span> <strong>Ext.</strong> <span id="ext"></span></p>
+            <p><strong>Área:</strong> <span id="contactArea"></span></p>
+        </div>
+    </dialog>
+
+
+
+
+    <!-- Círculo con el símbolo de pregunta -->
+    <div class="help-circle">?</div>
+
+    <!-- Caja de instrucciones en la parte inferior izquierda -->
+    <div class="tooltip-box">
+        <p><strong>Atajos:</strong></p>
+        <ul>
+            <li>Atajo de menú: <kbd>Shift + M</kbd></li>
+            <li>Pag. Sig: <kbd>▬▶</kbd></li>
+            <li>Pag. Ant: <kbd>◀▬</kbd></li>
+            <li>Acercar     :  <kbd>'+'</kbd></li>
+            <li>Alejar              :  <kbd>'-'</kbd></li>
+        </ul>
+        <p>El menu contiene opciones adiciones, archivos o recursos necesarios.</p>
+    </div>
+
+
+
+
+</Layout>
+<script>
+    // Para abrir el diálogo de visualización de errores
+    manageModalBase('openErrorLogBtn', 'errorLogDialog', 'closeErrorLogBtn', null, null);
+    // Para abrir el diálogo de reporte de errores
+    manageModalBase('openErrorDialogBtn', 'errorDialog', 'closeErrorDialogBtn', null, null);
+
+    const url = '~/pdfTest/1.pdf';
+
+
+
+
+</script>

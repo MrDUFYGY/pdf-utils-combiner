@@ -9,10 +9,14 @@ import svelte from '@astrojs/svelte';
 
 // https://astro.build/config
 export default defineConfig({
+  
   server: {
     port: 4321, // Puerto de Astro
   },
   vite: {
+    build: {
+      sourcemap: false,
+    },
     resolve: {
       alias: {
         '@components': '/src/components',

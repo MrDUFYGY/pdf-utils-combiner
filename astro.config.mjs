@@ -9,13 +9,17 @@ import svelte from '@astrojs/svelte';
 
 // https://astro.build/config
 export default defineConfig({
-  
+  build: {
+    format: 'directory', // Usa una opción válida como 'format'
+  },
   server: {
     port: 4321, // Puerto de Astro
   },
   vite: {
     build: {
       sourcemap: false,
+      chunkSizeWarningLimit: 1000, // Aumenta el límite de tamaño de chunk
+
     },
     resolve: {
       alias: {

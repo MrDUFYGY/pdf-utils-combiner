@@ -1,0 +1,208 @@
+---
+import Layout from '../../layout/layout.astro';
+---
+<style>
+  input{
+    color:black;
+  }
+
+  .card-preview {
+    width: 430px;
+min-width: 450px;
+padding-right: 3vw;
+    height: auto;
+    color:black;
+  }
+  .logo {
+margin-left: 2vw;
+margin-right: 2vw;
+    width: 280px;
+    height: auto;
+    /* border-radius: 50%; */
+  }
+  .social-icon {
+    width: 20px;
+    height: 20px;
+    /* background-color: #666; */
+    border-radius: 5px;
+  }
+</style>
+<Layout title="Generador de Firmas">
+    <div class="max-w-4xl mx-auto">
+        <!-- Card Preview -->
+        <div
+          id="card-preview"
+          class="card-preview bg-white p-6 mb-8 shadow-lg rounded-lg flex justify-between items-center"
+        >
+  
+          <div class="">
+            <h2 id="preview-name" class="text-xl font-bold text-green-600 w-48 max-w-[660px]">
+              Michael Scott
+            </h2>
+            <p id="preview-title" class="text-sm text-gray-600 max-w-[360px]">
+              Gerente Regional
+            </p>
+            <div class="mt-4 space-y-1">
+              <p class="text-sm">
+                <span id="preview-phone">(55) 5262 3800</span> Ext.
+                <span id="preview-ext">9999</span>
+              </p>
+              <p id="preview-email" class="text-sm">user@empresa.com.mx</p>
+              <!-- Iconos -->
+              <div class="flex gap-2 mt-4 ml-1"> 
+                <div class="social-icon">
+                  <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="0.258301" width="16.129" height="16.129" rx="3" fill="#116D37"/>
+                      <path d="M6.06457 2.68848H10.5807C12.3011 2.68848 13.699 4.08633 13.699 5.80676V10.3229C13.699 11.1499 13.3704 11.9431 12.7857 12.5278C12.2009 13.1126 11.4077 13.4412 10.5807 13.4412H6.06457C4.34414 13.4412 2.94629 12.0433 2.94629 10.3229V5.80676C2.94629 4.97974 3.27482 4.18659 3.85961 3.6018C4.4444 3.01701 5.23755 2.68848 6.06457 2.68848ZM5.95704 3.76375C5.44372 3.76375 4.95142 3.96766 4.58845 4.33064C4.22547 4.69361 4.02156 5.18591 4.02156 5.69923V10.4304C4.02156 11.5003 4.88715 12.3659 5.95704 12.3659H10.6882C11.2015 12.3659 11.6938 12.162 12.0568 11.799C12.4198 11.436 12.6237 10.9437 12.6237 10.4304V5.69923C12.6237 4.62934 11.7581 3.76375 10.6882 3.76375H5.95704ZM11.1452 4.5702C11.3235 4.5702 11.4944 4.641 11.6204 4.76703C11.7465 4.89307 11.8173 5.064 11.8173 5.24224C11.8173 5.42048 11.7465 5.59141 11.6204 5.71745C11.4944 5.84348 11.3235 5.91428 11.1452 5.91428C10.967 5.91428 10.796 5.84348 10.67 5.71745C10.544 5.59141 10.4732 5.42048 10.4732 5.24224C10.4732 5.064 10.544 4.89307 10.67 4.76703C10.796 4.641 10.967 4.5702 11.1452 4.5702ZM8.32263 5.37665C9.03558 5.37665 9.71933 5.65987 10.2235 6.164C10.7276 6.66813 11.0108 7.35187 11.0108 8.06482C11.0108 8.77777 10.7276 9.46152 10.2235 9.96565C9.71933 10.4698 9.03558 10.753 8.32263 10.753C7.60969 10.753 6.92594 10.4698 6.42181 9.96565C5.91768 9.46152 5.63446 8.77777 5.63446 8.06482C5.63446 7.35187 5.91768 6.66813 6.42181 6.164C6.92594 5.65987 7.60969 5.37665 8.32263 5.37665ZM8.32263 6.45192C7.89487 6.45192 7.48462 6.62185 7.18214 6.92433C6.87966 7.2268 6.70973 7.63705 6.70973 8.06482C6.70973 8.49259 6.87966 8.90284 7.18214 9.20532C7.48462 9.50779 7.89487 9.67772 8.32263 9.67772C8.7504 9.67772 9.16065 9.50779 9.46313 9.20532C9.76561 8.90284 9.93554 8.49259 9.93554 8.06482C9.93554 7.63705 9.76561 7.2268 9.46313 6.92433C9.16065 6.62185 8.7504 6.45192 8.32263 6.45192Z" fill="#F8E836"/>
+                      </svg>
+                                          
+                </div>
+                <div class="social-icon">
+                  <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="16.129" height="16.129" rx="3" fill="#116D37"/>
+                      <path d="M8.06458 2.68848C5.10759 2.68848 2.68823 5.10246 2.68823 8.07557C2.68823 10.7637 4.65597 12.9949 7.22587 13.3982V9.63471H5.86028V8.07557H7.22587V6.8874C7.22587 5.53794 8.02694 4.796 9.25813 4.796C9.84415 4.796 10.4571 4.89815 10.4571 4.89815V6.22611H9.77963C9.11296 6.22611 8.90329 6.64009 8.90329 7.06482V8.07557H10.3979L10.156 9.63471H8.90329V13.3982C10.1702 13.1981 11.3238 12.5517 12.1559 11.5756C12.988 10.5996 13.4438 9.35818 13.4409 8.07557C13.4409 5.10246 11.0216 2.68848 8.06458 2.68848Z" fill="#F8E836"/>
+                      </svg>
+                      
+                </div>
+                <div class="social-icon">
+                  <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="0.12915" width="16.129" height="16.129" rx="3" fill="#116D37"/>
+                      <path d="M14.0647 4.83894C13.6507 5.02711 13.2045 5.15077 12.7421 5.20991C13.2152 4.92496 13.5808 4.47335 13.7529 3.93034C13.3066 4.19916 12.812 4.38733 12.2905 4.49485C11.8658 4.03249 11.269 3.76367 10.5916 3.76367C9.32814 3.76367 8.29588 4.79593 8.29588 6.07012C8.29588 6.25292 8.31738 6.43034 8.35502 6.59701C6.44104 6.50023 4.73674 5.58088 3.60233 4.1884C3.4034 4.52711 3.2905 4.92496 3.2905 5.34432C3.2905 6.14539 3.69373 6.85507 4.31738 7.2583C3.93566 7.2583 3.58082 7.15077 3.269 6.98948V7.00561C3.269 8.12389 4.06469 9.05937 5.11846 9.26905C4.7802 9.36202 4.42493 9.37491 4.08082 9.30668C4.22685 9.765 4.51283 10.166 4.89857 10.4534C5.28432 10.7408 5.75042 10.9001 6.23136 10.9088C5.41613 11.5543 4.40556 11.9031 3.36577 11.8981C3.18297 11.8981 3.00018 11.8873 2.81738 11.8658C3.83889 12.5217 5.05394 12.9035 6.35502 12.9035C10.5916 12.9035 12.9195 9.38733 12.9195 6.33894C12.9195 6.23679 12.9195 6.14002 12.9142 6.03786C13.3658 5.71528 13.7529 5.30668 14.0647 4.83894Z" fill="#F8E836"/>
+                      </svg>
+                      
+                </div>
+                <div class="social-icon">
+                  <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="0.387451" width="16.129" height="16.129" rx="3" fill="#116D37"/>
+                      <path d="M7.37651 9.67761L10.1668 8.06471L7.37651 6.45181V9.67761ZM13.5916 5.46794C13.6615 5.72062 13.7098 6.05933 13.7421 6.48944C13.7797 6.91955 13.7959 7.29052 13.7959 7.6131L13.8281 8.06471C13.8281 9.24213 13.7421 10.1077 13.5916 10.6615C13.4572 11.1454 13.1453 11.4572 12.6615 11.5916C12.4088 11.6615 11.9464 11.7099 11.2367 11.7421C10.5378 11.7798 9.89802 11.7959 9.30662 11.7959L8.45178 11.8282C6.1991 11.8282 4.79587 11.7421 4.24211 11.5916C3.75824 11.4572 3.44641 11.1454 3.312 10.6615C3.24211 10.4088 3.19372 10.0701 3.16146 9.63998C3.12383 9.20987 3.1077 8.8389 3.1077 8.51632L3.07544 8.06471C3.07544 6.88729 3.16146 6.0217 3.312 5.46794C3.44641 4.98407 3.75824 4.67224 4.24211 4.53783C4.49479 4.46794 4.95716 4.41955 5.66684 4.38729C6.36576 4.34966 7.00555 4.33353 7.59694 4.33353L8.45178 4.30127C10.7045 4.30127 12.1077 4.38729 12.6615 4.53783C13.1453 4.67224 13.4572 4.98407 13.5916 5.46794Z" fill="#F8E836"/>
+                      </svg>
+                      
+                </div>
+                <div class="social-icon">
+                  <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="0.516602" width="16.129" height="16.129" rx="3" fill="#116D37"/>
+                      <path d="M12.3446 3.22607C12.6298 3.22607 12.9033 3.33936 13.1049 3.54101C13.3066 3.74267 13.4199 4.01616 13.4199 4.30134V11.8282C13.4199 12.1134 13.3066 12.3869 13.1049 12.5886C12.9033 12.7902 12.6298 12.9035 12.3446 12.9035H4.8177C4.53252 12.9035 4.25902 12.7902 4.05737 12.5886C3.85572 12.3869 3.74243 12.1134 3.74243 11.8282V4.30134C3.74243 4.01616 3.85572 3.74267 4.05737 3.54101C4.25902 3.33936 4.53252 3.22607 4.8177 3.22607H12.3446ZM12.0758 11.5594V8.70995C12.0758 8.2451 11.8911 7.7993 11.5624 7.47061C11.2337 7.14191 10.7879 6.95726 10.3231 6.95726C9.86609 6.95726 9.33383 7.23683 9.07577 7.65618V7.05941H7.57577V11.5594H9.07577V8.90887C9.07577 8.49489 9.4091 8.15618 9.82308 8.15618C10.0227 8.15618 10.2142 8.23548 10.3553 8.37664C10.4965 8.5178 10.5758 8.70924 10.5758 8.90887V11.5594H12.0758ZM5.82845 6.21532C6.068 6.21532 6.29774 6.12016 6.46713 5.95077C6.63652 5.78139 6.73168 5.55165 6.73168 5.3121C6.73168 4.8121 6.32845 4.40349 5.82845 4.40349C5.58748 4.40349 5.35637 4.49922 5.18597 4.66962C5.01558 4.84001 4.91985 5.07112 4.91985 5.3121C4.91985 5.8121 5.32845 6.21532 5.82845 6.21532ZM6.57577 11.5594V7.05941H5.08652V11.5594H6.57577Z" fill="#F8E836"/>
+                      </svg>
+                      
+                </div>
+              </div>
+              <p id="preview-website" class="text-sm">www.hidrosina.com.mx</p>
+            </div>
+          </div>
+          <div class="">
+              <svg width="5" height="114" viewBox="0 0 5 114" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.5 2C4.5 0.895431 3.60457 4.82823e-08 2.5 0C1.39543 -4.82823e-08 0.5 0.89543 0.5 2L4.5 2ZM0.5 2L0.499998 57L4.5 57L4.5 2L0.5 2Z" fill="#11A54E"/>
+                  <path d="M0.499998 112C0.499998 113.105 1.39543 114 2.5 114C3.60457 114 4.5 113.105 4.5 112L0.499998 112ZM0.5 57L0.499998 112L4.5 112L4.5 57L0.5 57Z" fill="#F8E836"/>
+                  </svg>
+                  
+          </div>
+          <div>
+            <img src="/logo.png" alt="Logo" class="logo" />
+          </div>
+        </div>
+  
+        <!-- Edit Form -->
+        <form id="signature-form" class="bg-white p-6 rounded-lg shadow-lg">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-700"
+                >Nombre completo</label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                placeholder="Tu nombre"
+              />
+            </div>
+            <div>
+              <label
+                for="title"
+                class="block text-sm font-medium text-gray-700"
+                >Puesto</label
+              >
+              <input
+                type="text"
+                id="title"
+                name="title"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                placeholder="Tu título"
+              />
+            </div>
+            <div>
+              <label
+                for="phone"
+                class="block text-sm font-medium text-gray-700"
+                >Teléfono</label
+              >
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                placeholder="Tu teléfono"
+              />
+            </div>
+            <div>
+              <label
+                for="ext"
+                class="block text-sm font-medium text-gray-700"
+                >Extensión</label
+              >
+              <input
+                type="text"
+                id="ext"
+                name="ext"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                placeholder="Ext."
+              />
+            </div>
+            <div>
+              <label
+                for="email"
+                class="block text-sm font-medium text-gray-700"
+                >Correo</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                placeholder="Tu correo"
+              />
+            </div>
+            <div>
+              <label
+                for="website"
+                class="block text-sm font-medium text-gray-700"
+                >Sitio Web</label
+              >
+              <input
+                type="url"
+                id="website"
+                name="website"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                placeholder="Tu sitio web"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+</Layout>
+
+
+<script type="text/javascript">
+  // Funciones en tiempo real
+  const fields = ["name", "title", "phone", "ext", "email", "website"];
+  fields.forEach((field) => {
+    document.getElementById(field).addEventListener("input", (e) => {
+      const preview = document.getElementById(`preview-${field}`);
+      if (preview) {
+        preview.textContent = e.target.value || preview.dataset.default || '';
+      }
+    });
+  });
+</script>

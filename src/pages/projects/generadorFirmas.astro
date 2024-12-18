@@ -28,6 +28,7 @@ import Layout from '../../layout/layout.astro';
     /* background-color: #666; */
     border-radius: 5px;
   }
+
 </style>
 <Layout title="Generador de Firmas">
     <div class="max-w-4xl m-auto">
@@ -99,19 +100,19 @@ import Layout from '../../layout/layout.astro';
                   
           </div>
           <div>
-            <img src="/logo.png" alt="Logo" class="logo" />
+            <img src="/logo.png" alt="Logo" class="logo" id="preview-logo" />
           </div>
         </div>
   
-    <!-- Botón de descarga -->
-    <div class="text-center">
-      <button
-        id="download-btn"
-        class="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none"
-      >
-        Descargar Firma
-      </button>
-    </div>
+        <!-- Botón de descarga -->
+        <div class="text-center">
+          <button
+            id="download-btn"
+            class="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none"
+          >
+            Descargar Firma
+          </button>
+        </div>
 
         <!-- Edit Form -->
         <form id="signature-form" class="bg-white m-10 p-6 rounded-lg shadow-lg">
@@ -144,34 +145,42 @@ import Layout from '../../layout/layout.astro';
                 placeholder="Tu título"
               />
             </div>
+            <div class="flex gap-4 items-center">
+              <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700">Teléfono</label>
+                <input
+                  type="number"
+                  id="phone"
+                  name="phone"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                  placeholder="Tu teléfono"
+                />
+              </div>
+              <div class="">
+                <label for="ext" class="block text-sm font-medium text-gray-700">Extensión</label>
+                <input
+                  type="text"
+                  id="ext"
+                  name="ext"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
+                  placeholder="Ext."
+                />
+              </div>
+            </div>
+
+
             <div>
-              <label
-                for="phone"
-                class="block text-sm font-medium text-gray-700"
-                >Teléfono</label
-              >
+              <label for="logo" class="block text-sm font-medium text-gray-700">Subir Logo</label>
               <input
-                type="tel"
-                id="phone"
-                name="phone"
+                type="file"
+                id="logo"
+                name="logo"
+                accept="image/*"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                placeholder="Tu teléfono"
               />
             </div>
-            <div>
-              <label
-                for="ext"
-                class="block text-sm font-medium text-gray-700"
-                >Extensión</label
-              >
-              <input
-                type="text"
-                id="ext"
-                name="ext"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                placeholder="Ext."
-              />
-            </div>
+
+
             <div>
               <label
                 for="email"
@@ -218,16 +227,28 @@ import Layout from '../../layout/layout.astro';
     });
   });
 
+// Cambiar logo en tiempo real
+document.getElementById("logo").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const previewLogo = document.getElementById("preview-logo");
+      previewLogo.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+
     // Descargar firma como PNG
     document.getElementById("download-btn").addEventListener("click", () => {
       const card = document.getElementById("card-preview");
       const nombre = document.getElementById("preview-name").textContent;
-      const titulo = document.getElementById("preview-title").textContent;
-      const tel = document.getElementById("preview-phone").textContent;
-      const ext = document.getElementById("preview-ext").textContent;
+
       html2canvas(card).then((canvas) => {
         const link = document.createElement("a");
-        link.download =  nombre+"firma.png";
+        link.download =  nombre+"_firma.png";
         link.href = canvas.toDataURL("image/png");
         link.click();
       });

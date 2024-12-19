@@ -89,7 +89,7 @@ import Layout from '../../layout/layout.astro';
           class=" m-auto card-preview bg-white p-6 mb-8 rounded-lg flex justify-between items-center"
         >
   
-          <div class="">
+          <div class="gap-4">
             <h2 id="preview-name" class="text-xl font-bold text-green-600 w-48 max-w-[660px]">
               Michael Scott
             </h2>
@@ -101,7 +101,7 @@ import Layout from '../../layout/layout.astro';
                 <span id="preview-phone">(55) 5262 3800</span> Ext.
                 <span id="preview-ext">9999</span>
               </p>
-              <p id="preview-email" class="text-sm">user@empresa.com.mx</p>
+              <p id="preview-email" class="text-sm mb-3 ">user@empresa.com.mx</p>
               <!-- Iconos -->
               <div class="flex gap-2 mt-4 ml-1"> 
                 <div class="social-icon">
@@ -154,8 +154,13 @@ import Layout from '../../layout/layout.astro';
             <img src="/logo.png" alt="Logo" class="logo" id="preview-logo" />
           </div>
         </div>
-  
-        <!-- Botón de descarga -->
+
+        
+
+
+
+
+        <!-- Botónes  -->
         <div class="text-center">
           <button
             id="download-btn"
@@ -170,10 +175,6 @@ import Layout from '../../layout/layout.astro';
           Aplicar Firma en Gmail
         </button>
         </div>
-
-
-
-
 
     
 
@@ -287,12 +288,6 @@ import Layout from '../../layout/layout.astro';
           </div>
         </form>
       </div>
-
-
-
-
-
-      
 
 
 
@@ -490,7 +485,7 @@ function copyToClipboard() {
   const linkInput = document.getElementById("signature-link");
   linkInput.select();
   document.execCommand("copy");
-  alert("Link copiado al portapapeles");
+  // alert("Link copiado al portapapeles");
 }
 
   // Función para subir imágenes a Cloudinary

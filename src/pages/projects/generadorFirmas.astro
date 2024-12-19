@@ -114,6 +114,17 @@ import Layout from '../../layout/layout.astro';
           </button>
         </div>
 
+        <!-- Botón de obtencion del link -->
+        <div class="text-center">
+          <button
+            id="upload-btn"
+            class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+          >
+            Obtener link
+          </button>
+          <p id="upload-status" class="mt-2 text-sm text-gray-600"></p>
+        </div>
+
         <!-- Edit Form -->
         <form id="signature-form" class="bg-white m-10 p-6 rounded-lg shadow-lg">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -224,6 +235,13 @@ import Layout from '../../layout/layout.astro';
       </div>
 
 
+
+
+
+      
+
+
+
 </Layout>
 
 
@@ -287,4 +305,56 @@ document.getElementById("svg-fill2").addEventListener("input", (e) => {
     path.setAttribute("fill", color);
   });
 });
+</script>
+
+
+<script type="module">
+  // Función para subir imágenes a Cloudinary
+  async function uploadImageToCloudinary(imageDataUrl) {
+  const cloudinaryUrl = "https://api.cloudinary.com/v1_1/duqslo19x/image/upload";
+  const uploadPreset = "firma_preset"; // Configurado en el panel de Cloudinary
+
+  const formData = new FormData();
+  formData.append("file", imageDataUrl);
+  formData.append("upload_preset", uploadPreset);
+
+  const response = await fetch(cloudinaryUrl, {
+  method: "POST",
+  body: formData,
+  });
+
+  if (!response.ok) {
+  throw new Error("Error al subir la imagen.");
+  }
+
+  return await response.json();
+  }
+
+  // Evento para capturar y subir la imagen
+  document.getElementById("upload-btn").addEventListener("click", async () => {
+    const card = document.getElementById("card-preview");
+
+    // Generar imagen con html2canvas
+    html2canvas(card).then(async (canvas) => {
+    const imageDataUrl = canvas.toDataURL("image/png");
+
+    try {
+    // Subir a Cloudinary
+    const uploadResponse = await uploadImageToCloudinary(imageDataUrl);
+    const imageUrl = uploadResponse.secure_url;
+
+    // Mostrar URL en la interfaz
+    const statusElement = document.getElementById("upload-status");
+    statusElement.textContent = `Firma subida: ${imageUrl}`;
+    statusElement.classList.add("text-green-600");
+
+    console.log("URL de la imagen:", imageUrl); // Maneja la URL según tus necesidades
+      } catch (error) {
+          console.error(error);
+          document.getElementById("upload-status").textContent =
+            "Error al subir la firma. Inténtalo de nuevo.";
+        }
+    });
+  }); 
+
 </script>

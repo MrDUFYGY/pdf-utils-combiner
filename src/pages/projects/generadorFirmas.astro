@@ -318,10 +318,10 @@ import Layout from '../../layout/layout.astro';
     </div>
   
 
-    <p id="upload-status" class="absolute right-[45%] text-sm text-gray-600"></p>
+    <p id="upload-status" class="absolute right-[10%] text-sm text-gray-600 pl-24"></p>
   
   <!-- Botones alineados -->
-  <div class="flex justify-center gap-4 mt-6">
+  <div class="flex justify-center gap-4 mt-16">
       <button
       id="upload-btn"
       class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
@@ -473,10 +473,11 @@ document.getElementById("upload-btn").addEventListener("click", async () => {
       const linkInput = document.getElementById("signature-link");
       linkInput.value = imageUrl;
 
+      copyToClipboard();
       // Mostrar estado
       const statusElement = document.getElementById("upload-status");
-      statusElement.textContent = `Firma subida correctamente.`;
       statusElement.classList.add("text-green-600");
+      statusElement.textContent = `Firma generada y copiada correctamente correctamente, ve a la sección "Firma" de la configuracion de google para agregarla.`;
     } catch (error) {
       console.error(error);
       document.getElementById("upload-status").textContent =

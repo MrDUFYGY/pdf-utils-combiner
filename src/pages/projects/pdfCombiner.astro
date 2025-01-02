@@ -133,11 +133,11 @@ const title = 'Subir Archivos';
 
     try {
       const response = await fetch(`https://api-js-toolbox.up.railway.app/api/upload`, {
-      // const response = await fetch(`http://localhost:5000/api/upload`, {
         method: 'POST',
         body: formData,
-        credentials: 'include', // Incluye cookies
+        credentials: 'include', // Incluir cookies si es necesario
       });
+
 
       if (response.ok) {
         const blob = await response.blob();
